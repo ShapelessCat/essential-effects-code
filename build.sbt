@@ -1,20 +1,20 @@
-ThisBuild / scalaVersion := "2.13.3"
+ThisBuild / scalaVersion := "2.13.6"
 ThisBuild / organization := "com.innerproduct"
-ThisBuild / version := "0.0.1-SNAPSHOT"
+ThisBuild / version := "0.0.2-SNAPSHOT"
 ThisBuild / fork := true
 
-val CatsVersion = "2.2.0"
-val CatsEffectVersion = "2.2.0"
-val CatsTaglessVersion = "0.11"
-val CirceVersion = "0.13.0"
-val Http4sVersion = "0.21.4"
+val CatsVersion = "2.5.1"
+val CatsEffectVersion = "2.5.1"
+val CatsTaglessVersion = "0.14.0"
+val CirceVersion = "0.14.1"
+val Http4sVersion = "0.21.24"
 val LogbackVersion = "1.2.3"
-val MunitVersion = "0.7.8"
+val MunitVersion = "0.7.27"
 
 val commonSettings =
   Seq(
     addCompilerPlugin(
-      "org.typelevel" %% "kind-projector" % "0.11.1" cross CrossVersion.full
+      "org.typelevel" %% "kind-projector" % "0.13.0" cross CrossVersion.full
     ),
     libraryDependencies ++= Seq(
       "org.scalameta" %% "munit" % MunitVersion % Test
