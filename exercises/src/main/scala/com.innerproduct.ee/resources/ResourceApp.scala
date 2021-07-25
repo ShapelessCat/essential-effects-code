@@ -12,12 +12,13 @@ object ResourceApp extends IOApp {
       }
       .as(ExitCode.Success)
 
-  val resources: Resource[IO, (DependencyA, DependencyB, DependencyC)] = // <1>
-    (resourceA, resourceB, resourceC).tupled
-
   val resourceA: Resource[IO, DependencyA] = ???
   val resourceB: Resource[IO, DependencyB] = ???
   val resourceC: Resource[IO, DependencyC] = ???
+
+  val resources: Resource[IO, (DependencyA, DependencyB, DependencyC)] = // <1>
+    (resourceA, resourceB, resourceC).tupled
+
 
   def applicationLogic( // <2>
       a: DependencyA,

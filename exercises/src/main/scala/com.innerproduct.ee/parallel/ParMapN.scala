@@ -8,10 +8,10 @@ object ParMapN extends IOApp {
   def run(args: List[String]): IO[ExitCode] =
     par.as(ExitCode.Success)
 
-  val hello = IO("hello").debug // <1>
-  val world = IO("world").debug // <1>
+  val hello: IO[String] = IO("hello").debug // <1>
+  val world: IO[String] = IO("world").debug // <1>
 
-  val par =
+  val par: IO[String] =
     (hello, world)
       .parMapN((h, w) => s"$h $w") // <2>
       .debug // <3>

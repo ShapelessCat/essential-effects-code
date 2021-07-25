@@ -10,7 +10,7 @@ object ServerResources {
 
   def pets[F[_]: Sync]: Resource[F, PetService[F]] =
     for {
-      pets <- Resource.liftF(Ref[F].of(Map.empty[Pet.Id, Pet]))
+      pets <- Resource.eval(Ref[F].of(Map.empty[Pet.Id, Pet]))
     } yield new PetService[F] {
       def find(id: Pet.Id): F[Option[Pet]] =
         pets.get.map(_.get(id))
@@ -81,7 +81,7 @@ object ServerResources {
 
   def orderRepo[F[_]: Sync]: Resource[F, OrderRepository[F]] =
     for {
-      orders <- Resource.liftF(Ref[F].of(Map.empty[PetOrder.Id, PetOrder]))
+      orders <- Resource.eval(Ref[F].of(Map.empty[PetOrder.Id, PetOrder]))
     } yield new OrderRepository[F] {
       def create(order: PetOrder): F[PetOrder.Id] =
         orders.modify { orders =>
@@ -92,12 +92,16 @@ object ServerResources {
             )
           (orders + (id -> order), id)
         }
+
       def find(id: PetOrder.Id): F[Option[PetOrder]] =
         orders.get.map(_.get(id))
+
       def findByStatus(status: PetOrder.Status): F[List[PetOrder]] =
         orders.get.map(_.values.find(_.status == status).toList)
+
       def findByPetId(id: Pet.Id): F[Option[PetOrder]] =
-        orders.get.map(_.values.find((_.petId == id)))
+        orders.get.map(_.values.find(_.petId == id))
+
       def update(id: PetOrder.Id, order: PetOrder): F[Unit] =
         orders.update(_ + (id -> order)).void
     }

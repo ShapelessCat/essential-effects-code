@@ -1,11 +1,12 @@
 package com.innerproduct.ee.parallel
 
 import cats.implicits._
+
 import scala.concurrent._
 import scala.concurrent.duration._
 
 object Future1 extends App {
-  implicit val ec = ExecutionContext.global
+  implicit val ec: ExecutionContextExecutor = ExecutionContext.global
 
   val hello = Future(println(s"[${Thread.currentThread.getName}] Hello")) // <1>
   val world = Future(println(s"[${Thread.currentThread.getName}] World")) // <1>

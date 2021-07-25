@@ -7,8 +7,8 @@ import io.circe._
 import io.circe.generic.semiauto._
 import org.http4s._
 import org.http4s.circe._
-import java.time.Instant
 
+import java.time.Instant
 
 case class PetOrder(
     petId: Pet.Id,
@@ -26,7 +26,7 @@ object PetOrder {
 
   object Id {
     def unapply(str: String): Option[Id] =
-      if (!str.isEmpty) scala.util.Try(Id(str.toLong)).toOption
+      if (str.nonEmpty) scala.util.Try(Id(str.toLong)).toOption
       else None
 
     implicit val decoder: Decoder[Id] = Decoder[Long].map(Id.apply)

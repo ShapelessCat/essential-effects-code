@@ -1,7 +1,7 @@
 package com.innerproduct.advanced.interpreters
 
 import cats.effect._
-import cats.syntax.all._
+//import cats.syntax.all._
 import com.innerproduct.ee.debug._
 import scala.concurrent.duration._
 

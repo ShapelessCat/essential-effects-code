@@ -2,6 +2,7 @@ package com.innerproduct.ee.resources
 
 import cats.effect._
 import com.innerproduct.ee.debug._
+
 import scala.io.Source
 
 object EarlyRelease extends IOApp {
@@ -21,14 +22,17 @@ object EarlyRelease extends IOApp {
   lazy val configResource: Resource[IO, Config] = // <1>
     for {
       source <- sourceResource
-      config <- Resource.liftF(Config.fromSource(source)) // <2>
+      config <- Resource.eval(Config.fromSource(source)) // <2>
     } yield config
 
   lazy val sourceResource: Resource[IO, Source] =
-    Resource.make(
-      IO(s"> opening Source to config")
-        .debug *> IO(Source.fromString(config))
-    )(source => IO(s"< closing Source to config").debug *> IO(source.close))
+    Resource.make {
+      IO(s"> opening Source to config").debug *>
+        IO(Source.fromString(config))
+    } { source =>
+      IO(s"< closing Source to config").debug *>
+        IO(source.close)
+    }
 
   val config = "exampleConnectURL"
 }
@@ -50,11 +54,12 @@ trait DbConnection {
 object DbConnection {
   def make(connectURL: String): Resource[IO, DbConnection] =
     Resource.make(
-      IO(s"> opening Connection to $connectURL").debug *> IO(
-        new DbConnection {
-          def query(sql: String): IO[String] =
-            IO(s"""(results for SQL "$sql")""")
-        }
-      )
+      IO(s"> opening Connection to $connectURL").debug *>
+        IO(
+          new DbConnection {
+            def query(sql: String): IO[String] =
+              IO(s"""(results for SQL "$sql")""")
+          }
+        )
     )(_ => IO(s"< closing Connection to $connectURL").debug.void)
 }

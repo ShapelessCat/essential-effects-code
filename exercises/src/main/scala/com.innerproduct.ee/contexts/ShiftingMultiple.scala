@@ -2,6 +2,7 @@ package com.innerproduct.ee.contexts
 
 import cats.effect._
 import com.innerproduct.ee.debug._
+
 import java.util.concurrent.Executors
 import scala.concurrent.ExecutionContext
 

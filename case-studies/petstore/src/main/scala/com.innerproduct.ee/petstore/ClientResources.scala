@@ -3,9 +3,9 @@ package com.innerproduct.ee.petstore
 import cats.data._
 import cats.effect._
 import cats.implicits._
+import org.http4s.Status._
 import org.http4s._
 import org.http4s.client.{Client => Http4sClient}
-import org.http4s.Status._
 
 object ClientResources {
   def pets[F[_]: Sync](
@@ -17,6 +17,7 @@ object ClientResources {
         client.expectOption[Pet](
           Request[F](Method.GET, baseURI / "pets" / id.toLong.toString)
         )
+
       def give(pet: Pet): F[Pet.Id] =
         client.expect[Pet.Id](
           Request[F](Method.POST, baseURI / "pets").withEntity(pet)
@@ -36,22 +37,24 @@ object ClientResources {
         }
 
       def applyForAdoption(id: Pet.Id): F[Either[PetOrder.Error, PetOrder.Id]] =
-        client.fetch(Request[F](Method.POST, baseURI / "orders" +? id)) {
+        client.run(Request[F](Method.POST, baseURI / "orders" +? id)).use {
           case Successful(res) => res.as[PetOrder.Id].map(_.asRight[PetOrder.Error])
           case res             => res.as[PetOrder.Error].map(_.asLeft[PetOrder.Id])
         }
+
       def approve(id: PetOrder.Id): F[Either[PetOrder.Error, Unit]] =
         EitherT(
-          client.fetch(
+          client.run(
             Request[F](
               Method.POST,
               baseURI / "orders" / id.toLong.toString / "approved"
             )
-          ) {
+          ).use {
             case Successful(res) => res.as[Unit].map(_.asRight[PetOrder.Error])
             case res             => res.as[PetOrder.Error].map(_.asLeft[Unit])
           }
         ).value
+
       def deliver(id: PetOrder.Id): F[Either[PetOrder.Error, Unit]] = ???
       def find(id: PetOrder.Id): F[Option[PetOrder]] = ???
       def findByPetId(id: Pet.Id): F[Option[PetOrder]] = ???

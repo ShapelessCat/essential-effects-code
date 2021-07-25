@@ -3,8 +3,8 @@ package com.innerproduct.ee.petstore
 import cats.effect._
 import cats.implicits._
 import org.http4s._
-import org.http4s.dsl.Http4sDsl
 import org.http4s.circe.CirceEntityCodec._
+import org.http4s.dsl.Http4sDsl
 
 object Routes {
 

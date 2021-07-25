@@ -1,6 +1,6 @@
 package com.innerproduct.ee.effects
 
-case class MyIO[A](unsafeRun: () => A) {  // <1>
+final case class MyIO[A](unsafeRun: () => A) {  // <1>
   def map[B](f: A => B): MyIO[B] =
     MyIO(() => f(unsafeRun()))
 

@@ -2,6 +2,7 @@ package com.innerproduct.ee.asynchrony
 
 import cats.effect._
 import com.innerproduct.ee.debug._
+
 import java.util.concurrent.CompletableFuture
 import scala.jdk.FunctionConverters._
 

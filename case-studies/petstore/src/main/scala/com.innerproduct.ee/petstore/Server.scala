@@ -8,20 +8,21 @@ import cats.tagless._
 import cats.tagless.implicits._
 import org.http4s._
 import org.http4s.implicits._
-import org.http4s.server.blaze.BlazeServerBuilder
 import org.http4s.server.Router
-import scala.concurrent.duration._
+import org.http4s.server.blaze.BlazeServerBuilder
+
 import scala.concurrent.ExecutionContext
+import scala.concurrent.duration._
 
 object Server extends IOApp {
   
-  def run(args: List[String]) =
+  def run(args: List[String]): IO[ExitCode] =
     runR.use(_ => IO.never)
 
   def runR: Resource[IO, Unit] =
     for {
       rs <- routes
-      _ <- server(Router("/" -> rs).orNotFound)
+      _  <- server(Router("/" -> rs).orNotFound)
     } yield ()
 
   def server(app: HttpApp[IO]): Resource[IO, org.http4s.server.Server[IO]] =

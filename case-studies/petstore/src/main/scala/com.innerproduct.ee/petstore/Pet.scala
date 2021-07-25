@@ -19,7 +19,7 @@ object Pet {
 
   object Id {
     def unapply(str: String): Option[Id] =
-      if (!str.isEmpty) scala.util.Try(Id(str.toLong)).toOption
+      if (str.nonEmpty) scala.util.Try(Id(str.toLong)).toOption
       else None
 
     implicit val show: Show[Id] = Show.fromToString

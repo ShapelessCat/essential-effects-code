@@ -11,7 +11,7 @@ object Parallelism extends IOApp {
       _ <- tasks.debug
     } yield ExitCode.Success
 
-  val numCpus = Runtime.getRuntime().availableProcessors() // <1>
-  val tasks = List.range(0, numCpus * 2).parTraverse(task) // <2>
+  val numCpus: Int = Runtime.getRuntime.availableProcessors() // <1>
+  val tasks: IO[List[Int]] = List.range(0, numCpus * 2).parTraverse(task) // <2>
   def task(i: Int): IO[Int] = IO(i).debug // <3>
 }

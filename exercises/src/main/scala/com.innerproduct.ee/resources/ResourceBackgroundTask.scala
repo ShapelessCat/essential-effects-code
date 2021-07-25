@@ -3,6 +3,7 @@ package com.innerproduct.ee.resources
 import cats.effect._
 import cats.implicits._
 import com.innerproduct.ee.debug._
+
 import scala.concurrent.duration._
 
 object ResourceBackgroundTask extends IOApp {

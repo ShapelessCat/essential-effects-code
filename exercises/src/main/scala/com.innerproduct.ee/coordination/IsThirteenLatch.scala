@@ -3,16 +3,17 @@ package com.innerproduct.ee.coordination
 import cats.effect._
 import cats.implicits._
 import com.innerproduct.ee.debug._
+
 import scala.concurrent.duration._
 
 object IsThirteenLatch extends IOApp {
   def run(args: List[String]): IO[ExitCode] =
     for {
       latch <- CountdownLatch(13)
-      _ <- (beeper(latch), tickingClock(latch)).parTupled
+      _     <- (beeper(latch), tickingClock(latch)).parTupled
     } yield ExitCode.Success
 
-  def beeper(latch: CountdownLatch) =
+  def beeper(latch: CountdownLatch): IO[Unit] =
     for {
       _ <- latch.await
       _ <- IO("BEEP!").debug

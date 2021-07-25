@@ -1,7 +1,6 @@
 package com.innerproduct.ee.effects
 
-import scala.concurrent.duration.FiniteDuration
-import scala.concurrent.duration.MILLISECONDS
+import scala.concurrent.duration.{FiniteDuration, MILLISECONDS}
 
 object Timing extends App {
   val clock: MyIO[Long] =  // <1>

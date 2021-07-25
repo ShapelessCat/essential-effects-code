@@ -3,6 +3,7 @@ package com.innerproduct.ee.control
 import cats.effect._
 import cats.effect.implicits._
 import com.innerproduct.ee.debug._
+
 import scala.concurrent.duration._
 
 object Timeout extends IOApp {

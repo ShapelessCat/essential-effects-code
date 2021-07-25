@@ -2,13 +2,14 @@ package com.innerproduct.ee.testing
 
 import cats.effect._
 import cats.effect.laws.util.TestContext
-import java.util.concurrent.TimeoutException
 import munit.FunSuite
+
+import java.util.concurrent.TimeoutException
 import scala.concurrent.duration._
 import scala.util._
 
 trait EffectTesting {
-  val ctx = TestContext()
+  val ctx: TestContext = TestContext()
   implicit val cs: ContextShift[IO] = ctx.ioContextShift
   implicit val timer: Timer[IO] = ctx.timer
 }

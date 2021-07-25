@@ -2,6 +2,7 @@ package com.innerproduct.ee.asynchrony
 
 import cats.effect._
 import com.innerproduct.ee.debug._
+
 import scala.concurrent.ExecutionContext
 
 object AsyncThread extends IOApp {
@@ -16,7 +17,7 @@ object AsyncThread extends IOApp {
     IO.async { cb =>
       ExecutionContext.global.execute {
         new Runnable {
-          def run() = ???
+          def run(): Unit = ???
         }
       }
     }
