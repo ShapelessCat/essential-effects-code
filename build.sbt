@@ -3,7 +3,7 @@ ThisBuild / organization := "com.innerproduct"
 ThisBuild / version := "0.0.1-SNAPSHOT"
 ThisBuild / fork := true
 
-val CatsEffectVersion = "2.5.1"
+val CatsEffectVersion = "2.5.3"
 val CatsTaglessVersion = "0.14.0"
 val CirceVersion = "0.14.1"
 val Http4sVersion = "0.21.24"
