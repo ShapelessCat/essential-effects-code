@@ -16,5 +16,12 @@ object debug {
         tn = Thread.currentThread.getName
         _ = println(s"[${Colorize.reversed(tn)}] $a") // <1>
       } yield a
+
+    def debug(prefix: String): IO[A] =
+      for {
+        a <- ioa
+        tn = Thread.currentThread.getName
+        _ = println(s"[${Colorize.reversed(tn)}] ($prefix) $a") // <1>
+      } yield a
   }
 }
