@@ -16,9 +16,7 @@ object AsyncThread extends IOApp {
   val effect: IO[String] =
     IO.async { cb =>
       ExecutionContext.global.execute {
-        new Runnable {
-          def run(): Unit = ???
-        }
+        () => ???; ()
       }
     }
 }
