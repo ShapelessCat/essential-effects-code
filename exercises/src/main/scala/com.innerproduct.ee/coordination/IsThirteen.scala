@@ -26,7 +26,6 @@ object IsThirteen extends IOApp {
       _     <- IO.sleep(1.second)
       _     <- IO(System.currentTimeMillis).debug
       count <- ticks.updateAndGet(_ + 1)
-      _     <- if (count >= 13) is13.complete(()) else IO.unit // <4>
-      _     <- tickingClock(ticks, is13)
+      _     <- if (count >= 13) is13.complete(()) else tickingClock(ticks, is13) // <4>
     } yield ()
 }
