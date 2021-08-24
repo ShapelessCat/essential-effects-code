@@ -16,7 +16,7 @@ object IsThirteenLatch extends IOApp {
   def beeper(latch: CountdownLatch): IO[Unit] =
     for {
       _ <- latch.await
-      _ <- IO("BEEP!").debug
+      _ <- IO.pure("BEEP!").debug
     } yield ()
 
   def tickingClock(latch: CountdownLatch): IO[Unit] =

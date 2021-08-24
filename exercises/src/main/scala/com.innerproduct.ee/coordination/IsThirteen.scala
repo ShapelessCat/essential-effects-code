@@ -18,7 +18,7 @@ object IsThirteen extends IOApp {
   def beepWhen13(is13: Deferred[IO, Unit]): IO[Unit] =
     for {
       _ <- is13.get // <3>
-      _ <- IO("BEEP!").debug
+      _ <- IO.pure("BEEP!").debug
     } yield ()
 
   def tickingClock(ticks: Ref[IO, Long], is13: Deferred[IO, Unit]): IO[Unit] =
